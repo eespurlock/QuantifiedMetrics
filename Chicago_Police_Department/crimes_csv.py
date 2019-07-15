@@ -8,28 +8,18 @@ https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-present-Dashboard/5c
 import pandas as pd
 import gc
 
-df = pd.read_csv('Crimes_-_2001_to_present.csv')
-print(df.columns)
-for year in [2019, 2018, 2017, 2016]:
-    print(year)
-    filt = df['Year'] == year
-    df_yr = df[filt]
-    print(df_yr.shape)
-    name = ('CPD_%s.csv' %str(year))
-    df_yr.to_csv(name)
-    df_yr.dropna(subset=['Block'], inplace=True)
-    print(df_yr.shape)
+df = pd.read_csv('Crimes_-_2001_to_present.csv') #turns downloaded data into a pandas dataframe
 
+for year in [2019, 2018, 2017, 2016]: #You can change this to include only the year(s) you want information for
+    filt = df['Year'] == year #filters out only the year you want
+    df_yr = df[filt]
+    name = ('CPD_%s.csv' %str(year)) #creates a name specific to the year you are getting information for
+    df_yr.to_csv(name) #turns the filtered dataframe into a CSV
+
+#The following commands clean up the objects you created
 del df
 del filt
 del name
 del year
 del df_yr
 gc.collect
-print('Complete')
-
-#112,910 with NAs (2019)
-#90,651 (80.3% of total data) without NAs in Lat and Long (2019)
-
-#267,028 with NAs (2018)
-#263,458 (98.7% of total data) without NAs in Lat and Long (2018)
